@@ -3,6 +3,7 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +18,8 @@ public class StoredProcedure {
 	
 	public static void inscription(int sem_num, int idPersonne) throws Exception
 	{
-		//yyyy-mm-dd -> format.format(date);
+		boolean ajoutOK = false;
+		
 		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy", Locale.FRANCE);
 		String strDate = format.format(new Date());
 		String strDateSem = "";
@@ -40,7 +42,10 @@ public class StoredProcedure {
 			rs.close();
 			
 			if(strDate.equals(strDateSem))
+			{
+				ajoutOK = true;
 				stmt.executeUpdate(insertInsQuery);
+			}
 
 		}
 		catch(Exception e)
@@ -53,10 +58,13 @@ public class StoredProcedure {
 			if(connexion != null) connexion.close();
 			if(stmt != null) stmt.close();
 		}
+		
+		if(!ajoutOK) throw new SQLException("Les inscriptions ne sont pas ouvertes");
 	}
 	
 	public static void annulerInscription(int sem_num, int idPersonne) throws Exception
 	{
+		int delOK = 0;
 		String deleteQuery = "DELETE FROM inscription WHERE ins_personne = " + idPersonne + " AND ins_seminaire = " + sem_num;
 		
 		Connection connexion = null;
@@ -67,7 +75,7 @@ public class StoredProcedure {
 			connexion = DriverManager.getConnection("jdbc:default:connection");
 			stmt = connexion.createStatement();
 			
-			stmt.executeUpdate(deleteQuery);
+			delOK = stmt.executeUpdate(deleteQuery);
 
 		}
 		catch(Exception e)
@@ -80,6 +88,8 @@ public class StoredProcedure {
 			if(connexion != null) connexion.close();
 			if(stmt != null) stmt.close();
 		}
+		
+		if(delOK != 1) throw new SQLException("Erreur lors de la desinscription");
 	}
 	
 	public static void confirmerSeminaire(int sem_num) throws Exception
