@@ -22,12 +22,12 @@ public class DAOPersonne {
 			if(rs.next())
 			{
 				personne = new Personne();
-				personne.setId(rs.getInt(0));
-				personne.setNom(rs.getString(0));
-				personne.setPrenom(rs.getString(1));
-				personne.setAdresse(rs.getString(2));
-				personne.setTelephone(rs.getString(3));
-				personne.setMail(rs.getString(4));
+				personne.setId(rs.getInt(1));
+				personne.setNom(rs.getString(2));
+				personne.setPrenom(rs.getString(3));
+				personne.setAdresse(rs.getString(4));
+				personne.setTelephone(rs.getString(5));
+				personne.setMail(rs.getString(6));
 			}
 		}
 		catch(Exception e)

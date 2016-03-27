@@ -13,7 +13,7 @@ public class DAOPause {
 
 	public static ArrayList<Pause> getPausesBySeminaire(int idSeminaire) throws Exception
 	{
-		String query = "SELECT * FROM inscription WHERE ins_seminaire = " + idSeminaire;
+		String query = "SELECT * FROM reserverpause WHERE res_seminaire = " + idSeminaire;
 		ArrayList<Pause> pauses = new ArrayList<Pause>();
 		
 		Statement stmt = null;
@@ -25,9 +25,9 @@ public class DAOPause {
 			while(rs.next())
 			{
 				Pause p = new Pause();
-				p.setTarif(rs.getDouble(0));
-				p.setType(TypePause.getEnum(rs.getInt(0)));
-				Prestataire pres = DAOPrestataire.getPrestataire(rs.getInt(0));
+				p.setTarif(rs.getDouble(1));
+				p.setType(TypePause.getEnum(rs.getInt(2)));
+				Prestataire pres = DAOPrestataire.getPrestataire(rs.getInt(4));
 				p.setPrestataire(pres);
 				
 				pauses.add(p);

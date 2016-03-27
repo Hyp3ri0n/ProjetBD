@@ -19,7 +19,6 @@ public class Connexion {
 		try
 		{
 			DBAccesProperties dbAccess = new DBAccesProperties(configurationFile);
-			Debug.display(dbAccess.getJdbcDriver());
 			connexion = DriverManager.getConnection(dbAccess.getDBUrl(), dbAccess.getUsername(), dbAccess.getPassword());
 		}
 		catch(Exception e)

@@ -23,12 +23,12 @@ public class DAOAnimateur {
 			while(rs.next())
 			{
 				Animateur anim = new Animateur();
-				anim.setId(rs.getInt(0));
-				anim.setNom(rs.getString(0));
-				anim.setPrenom(rs.getString(1));
-				anim.setAdresse(rs.getString(2));
-				anim.setTelephone(rs.getString(3));
-				anim.setMail(rs.getString(4));
+				anim.setId(rs.getInt(1));
+				anim.setNom(rs.getString(2));
+				anim.setPrenom(rs.getString(3));
+				anim.setAdresse(rs.getString(4));
+				anim.setTelephone(rs.getString(5));
+				anim.setMail(rs.getString(6));
 				
 				animateurs.add(anim);
 			}
@@ -61,12 +61,12 @@ public class DAOAnimateur {
 			if(rs.next())
 			{
 				anim = new Animateur();
-				anim.setId(rs.getInt(0));
-				anim.setNom(rs.getString(0));
-				anim.setPrenom(rs.getString(1));
-				anim.setAdresse(rs.getString(2));
-				anim.setTelephone(rs.getString(3));
-				anim.setMail(rs.getString(4));
+				anim.setId(rs.getInt(1));
+				anim.setNom(rs.getString(2));
+				anim.setPrenom(rs.getString(3));
+				anim.setAdresse(rs.getString(4));
+				anim.setTelephone(rs.getString(5));
+				anim.setMail(rs.getString(6));
 			}
 		}
 		catch(Exception e)

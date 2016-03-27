@@ -12,7 +12,7 @@ public class Seminaire {
 	public enum TypeSeminaire
 	{
 		JOURNEE(0, "Journée", 6, 3),
-		DEMI_AM(1, "Matinée", 3, 2),
+		DEMI_AM(1, "Matin", 3, 2),
 		DEMI_PM(2, "Après-midi", 3, 2);
 		
 		private String libelle;
@@ -104,7 +104,7 @@ public class Seminaire {
 	public double getRecetteMin() { return (this.getNbPlaces() / 2) * this.getTarif(); }
 	public double getDepenseMax() { return this.getDepense(this.getNbPlaces()); }
 	public double getDepenseMin() { return this.getDepense(this.getNbPlaces() / 2 + 1); }
-	private double getDepense(int nbParticipant)
+	public double getDepense(int nbParticipant)
 	{
 		double prix = 0;
 		prix += this.getSalle().getTarif();
@@ -144,8 +144,9 @@ public class Seminaire {
 	}
 	public ArrayList<Inscription> getListeParticipants()
 	{
+		int maxListe = this.getInscriptions().size() <= this.getNbPlaces() ? this.getInscriptions().size() : this.getNbPlaces();
 		ArrayList<Inscription> participants = new ArrayList<Inscription>();
-		for(int i = 0; i < this.getNbPlaces(); i++)
+		for(int i = 0; i < maxListe; i++)
 		{
 			participants.add(this.getInscriptions().get(i));
 		}
@@ -193,8 +194,7 @@ public class Seminaire {
 	{
 		if(this.getPause(p.getType()) != null) throw new Exception("Pause déjà comprise");
 		if(this.getPauses().size() >= this.getType().getNbPause()) throw new Exception("Nombre de pauses depassées");
-		if(this.getType() == TypeSeminaire.DEMI_AM && p.getType() == TypePause.PAUSE_PM) throw new Exception("Pause PM non comprise dans le seminaire");
-		if(this.getType() == TypeSeminaire.DEMI_PM && p.getType() == TypePause.PAUSE_AM) throw new Exception("Pause AM non comprise dans le seminaire");
+		if(!pauseCompatible(this.getType(), p.getType())) throw new Exception("Pause non comprise dans le seminaire");
 			
 		this.pauses.add(p);
 	}

@@ -24,7 +24,7 @@ public class DAOInscription {
 			while(rs.next())
 			{
 				Inscription ins = new Inscription();
-				Personne p = DAOPersonne.getPersonne(rs.getInt(0));
+				Personne p = DAOPersonne.getPersonne(rs.getInt(2));
 				ins.setPersonne(p);
 				ins.setDate(rs.getDate(1));
 				
