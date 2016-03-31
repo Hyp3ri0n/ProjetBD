@@ -149,7 +149,7 @@ public class ConstraintManager {
 	public static boolean contrainte_3(Date sem_date) throws SQLException
 	{
 		boolean contrainteOK = true;
-		String message;
+		String message = "";
 		
 		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy", Locale.FRANCE);
 		String strDate = format.format(sem_date);
@@ -191,7 +191,7 @@ public class ConstraintManager {
 			if(stmt != null) stmt.close();
 			if(rs != null) rs.close();
 		}
-		if(!contrainteOK) throw new SQLException("Impossible d'ajouter le seminaire");
+		if(!contrainteOK) throw new SQLException(message);
 		return contrainteOK;
 	}
 }
