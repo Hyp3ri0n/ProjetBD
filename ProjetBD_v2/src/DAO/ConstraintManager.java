@@ -17,7 +17,7 @@ public class ConstraintManager {
 
 	/**
 	 * Contrainte sur l'ajout d'activités
-	 * @param idSeminaire identifiant du séminaire
+	 * @param sem_num identifiant du séminaire
 	 * @throws SQLException
 	 */
 	public static boolean contrainte_1(int sem_num) throws SQLException
@@ -149,11 +149,12 @@ public class ConstraintManager {
 	public static boolean contrainte_3(Date sem_date) throws SQLException
 	{
 		boolean contrainteOK = true;
+		String message;
 		
 		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy", Locale.FRANCE);
 		String strDate = format.format(sem_date);
 		
-		String countQuery = "SELECT COUNT(*) FROM seminaire WHERE sem_date = TO_DATE(" + strDate + ", 'dd-mm-yyyy');";
+		String countQuery = "SELECT COUNT(*) FROM seminaire WHERE sem_date = TO_DATE('" + strDate + "', 'dd-mm-yyyy');";
 		
 		Connection connexion = null;
 		Statement stmt = null;
@@ -167,15 +168,21 @@ public class ConstraintManager {
 			
 			rs = stmt.executeQuery(countQuery);
 			if(rs.next())
+			{
+				message = "";
 				if(rs.getInt(1) == 3)
+				{
 					contrainteOK = false;
+					message = "Impossible d'ajouter le seminaire";
+				}
+			}
 			rs.close();
 		}
 		catch(Exception e)
 		{
 			if(connexion != null) connexion.close();
 			System.out.println(e);
-			
+			message = "Erreur requete";
 			contrainteOK = false;
 		}
 		finally
